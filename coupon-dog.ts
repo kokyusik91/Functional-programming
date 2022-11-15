@@ -112,7 +112,7 @@ type Email = {
   subject: string
   body: string
 }
-// 1명에 대한 이메일 목록을 만들어낸다.
+/** 1명에 대한 이메일 목록을 만들어낸다. */
 const emailForSubscriber = (
   subScriber: UserInfoModel,
   bests: string[],
@@ -159,23 +159,24 @@ function sendEmail(email: Email): Promise<any> {
   })
 }
 
-// 계산 -> 구독자 목록과 쿠폰 목록을 입력으로 받아서 이메일 목록 계획하는 함수를 만들고, return 으로 이메일 목록을 내보낸다.
-
-async function run() {
+async function sendIssue() {
   const userInfo = await getUserInfo()
+
   const couponInfo = await getCouponInfo()
 
-  const peopleWhoGetGoodCouponList = filteredByrecUptoTen(userInfo)
   const bestCouponList = filteredCouponList(couponInfo, 'best')
   const goodCouponList = filteredCouponList(couponInfo, 'good')
-
   const emailList = makeAllemailList(userInfo, bestCouponList, goodCouponList)
-
   emailList.forEach(async (email) => {
-    console.log('보낼 이메일 양식!', email)
     const response = await sendEmail(email)
+    console.log('보낼 이메일 양식!', email)
     console.log('response', response)
   })
+}
+
+// 계산 -> 구독자 목록과 쿠폰 목록을 입력으로 받아서 이메일 목록 계획하는 함수를 만들고, return 으로 이메일 목록을 내보낸다.
+async function run() {
+  await sendIssue()
 }
 
 run()
