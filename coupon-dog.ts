@@ -105,12 +105,19 @@ const filteredCouponList = (
     .filter((coupon) => coupon.rank === state)
     .map((coupon) => coupon.coupon)
 }
+
+type Email = {
+  emailFrom: string
+  emailTo: string
+  subject: string
+  body: string
+}
 // 1명에 대한 이메일 목록을 만들어낸다.
 const emailForSubscriber = (
   subScriber: UserInfoModel,
   bests: string[],
   goods: string[],
-) => {
+): Email => {
   const rank = distinBestOrGood(subScriber)
   if (rank === 'best') {
     return {
@@ -118,7 +125,7 @@ const emailForSubscriber = (
       emailFrom: 'https://kyusikko@naver.com',
       emailTo: subScriber.email,
       subject: 'Your weekly coupon inside. 🎊 You won Best Coupon!🎊',
-      body: `Here is your coupon code ${bests.join(',')}`,
+      body: `Here is your coupon code ${bests.join(', ')}`,
     }
   } else {
     return {
@@ -126,7 +133,7 @@ const emailForSubscriber = (
       emailFrom: 'https://kyusikko@naver.com',
       emailTo: subScriber.email,
       subject: 'Your weekly coupon inside',
-      body: `Here is your coupon code ${goods.join(',')}`,
+      body: `Here is your coupon code ${goods.join(', ')}`,
     }
   }
 }
@@ -136,8 +143,20 @@ const makeAllemailList = (
   bests: string[],
   goods: string[],
 ) => {
-  const emailList = []
-  // userInfo.forEach((user) => )
+  const emailList: Email[] = []
+  userInfo.forEach((user) => {
+    emailList.push(emailForSubscriber(user, bests, goods))
+  })
+
+  return emailList
+}
+
+function sendEmail(email: Email): Promise<any> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('이메일을 성공적으로 보냈습니다!')
+    }, 2000)
+  })
 }
 
 // 계산 -> 구독자 목록과 쿠폰 목록을 입력으로 받아서 이메일 목록 계획하는 함수를 만들고, return 으로 이메일 목록을 내보낸다.
@@ -150,9 +169,13 @@ async function run() {
   const bestCouponList = filteredCouponList(couponInfo, 'best')
   const goodCouponList = filteredCouponList(couponInfo, 'good')
 
-  userInfo.forEach((user) =>
-    console.log(emailForSubscriber(user, bestCouponList, goodCouponList)),
-  )
+  const emailList = makeAllemailList(userInfo, bestCouponList, goodCouponList)
+
+  emailList.forEach(async (email) => {
+    console.log('보낼 이메일 양식!', email)
+    const response = await sendEmail(email)
+    console.log('response', response)
+  })
 }
 
 run()
