@@ -8,24 +8,26 @@
 
   function add_item_to_cart(name: string, price: number) {
     shopping_cart = add_item(shopping_cart, name, price)
-    calc_cart_total()
+    calc_cart_total(shopping_cart)
   }
 
-  function calc_cart_total() {
-    shopping_cart_total = calc_total(shopping_cart)
-    update_shipping_icons()
-    update_tax_dom()
+  function calc_cart_total(cart: Cart[]) {
+    const total = calc_total(cart)
+    update_shipping_icons(cart)
+    update_tax_dom(total)
+    shopping_cart_total = total
   }
 
-  function update_tax_dom() {
-    set_tax_dom(calc_tax(shopping_cart_total))
+  function update_tax_dom(total: number) {
+    set_tax_dom(calc_tax(total))
   }
 
-  function update_shipping_icons() {
+  function update_shipping_icons(cart: Cart[]) {
     const buy_buttons = get_buy_buttons_dom()
     buy_buttons.forEach((button) => {
       // 버튼들을 반복문으로 돌리면서, 현재 shopping_cart의 총합이 20보다 크면 true return
-      const new_cart = add_item(shopping_cart, button.name, button.price)
+      // 전역 변수를 쓰는 shopping_cart를 인자로 바꾼다. shopping_cart -> cart (액션에서 암묵적 입력을 명시적 입력으로 바꾼다.)
+      const new_cart = add_item(cart, button.name, button.price)
       if (get_free_shipping(new_cart)) {
         button.show_free_shipping_icons()
       } else button.hide_free_shipping_icons()
