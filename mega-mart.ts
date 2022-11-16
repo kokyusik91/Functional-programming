@@ -24,15 +24,18 @@
   function update_shipping_icons() {
     const buy_buttons = get_buy_buttons_dom()
     buy_buttons.forEach((button) => {
-      if (is_free(button.item.price, shopping_cart_total)) {
+      // 버튼들을 반복문으로 돌리면서, 현재 shopping_cart의 총합이 20보다 크면 true return
+      const new_cart = add_item(shopping_cart, button.name, button.price)
+      if (get_free_shipping(new_cart)) {
         button.show_free_shipping_icons()
       } else button.hide_free_shipping_icons()
     })
   }
 
   // 😙 계산으로 변경
-  function is_free(price: number, total: number) {
-    if (price + total >= 20) true
+  function get_free_shipping(cart: Cart[]) {
+    // 장바구니에 있는 총 합이 20보다 커야 무료배송
+    if (calc_total(cart) >= 20) true
     return false
   }
 
