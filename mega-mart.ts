@@ -8,15 +8,15 @@
 
   function add_item_to_cart(name: string, price: number) {
     shopping_cart = add_item(shopping_cart, name, price)
-    calc_cart_total(shopping_cart)
-  }
-
-  function calc_cart_total(cart: Cart[]) {
-    const total = calc_total(cart)
-    update_shipping_icons(cart)
+    // calc_cart_total(shopping_cart)
+    const total = calc_total(shopping_cart)
+    update_shipping_icons(shopping_cart)
     update_tax_dom(total)
-    shopping_cart_total = total
   }
+  // 너무 과한 함수 였으므로 add_item_to_cart로 뺌
+  // function calc_cart_total(cart: Cart[]) {
+  //   shopping_cart_total = total
+  // }
 
   function update_tax_dom(total: number) {
     set_tax_dom(calc_tax(total))
