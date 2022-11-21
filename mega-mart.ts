@@ -1,4 +1,5 @@
 {
+  // 타입스크립트로 마이그레이션
   type Cart = {
     name: string
     price: number
