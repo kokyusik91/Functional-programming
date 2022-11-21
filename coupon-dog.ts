@@ -53,7 +53,7 @@ const couponRankList: CouponModel[] = [
   },
 ]
 // 3초 있다가 promise return
-function asyncFunc(data: UserInfoModel[] | CouponModel[]): Promise<any> {
+function asyncFunc<T>(data: T): Promise<T> {
   return new Promise((resolve, reject) => {
     setTimeout(() => resolve(data), 2000)
   })
