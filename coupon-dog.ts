@@ -161,16 +161,14 @@ function sendEmail(email: Email): Promise<any> {
 
 async function sendIssue() {
   const userInfo = await getUserInfo()
-
   const couponInfo = await getCouponInfo()
 
   const bestCouponList = filteredCouponList(couponInfo, 'best')
   const goodCouponList = filteredCouponList(couponInfo, 'good')
   const emailList = makeAllemailList(userInfo, bestCouponList, goodCouponList)
+  console.log('emailList', emailList)
   emailList.forEach(async (email) => {
     const response = await sendEmail(email)
-    console.log('보낼 이메일 양식!', email)
-    console.log('response', response)
   })
 }
 
