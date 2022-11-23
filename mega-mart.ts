@@ -23,6 +23,8 @@
     set_tax_dom(calc_tax(total))
   }
 
+  // 이것은 액션이다
+  // dom을 업데이트 하는 로직이 있으므로 언제 호출하느냐에 따라 영향을 미친다.
   function update_shipping_icons(cart: Cart[]) {
     const buy_buttons = get_buy_buttons_dom()
     buy_buttons.forEach((button) => {
