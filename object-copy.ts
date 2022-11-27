@@ -25,10 +25,51 @@
 
   console.log(setPrice(object, 56))
 
-  function objectDelete(object, key) {
-    const new_object = Object.assign({}, object)
-    delete new_object[key]
+  // function objectDelete(object, key) {
+  //   const new_object = Object.assign({}, object)
+  //   delete new_object[key]
 
-    return new_object
+  //   return new_object
+  // }
+
+  // function setPriceByName(cart, name, price) {
+  //   // 카트를 순회하면서, 해당하는 이름의 price를 바꾼다.
+  //   for (let i = 0; i < cart.length; i++) {
+  //     if (cart[i].name === name) {
+  //       cart[i].price = price
+  //     }
+  //   }
+  // }
+
+  // type GoCartType = {
+  //   name: string
+  //   price: number
+  // }
+
+  const goCart = [
+    { name: 'ironman', price: 57 },
+    { name: 'captain-america', price: 20 },
+    { name: 'hulk', price: 112 },
+  ]
+
+  function setPriceByNameAdvanced(
+    cart: ObjectI<number | string>[],
+    name: keyof ObjectI<number | string>,
+    price: number,
+  ): ObjectI<number | string>[] {
+    const new_cart = [...cart]
+    {
+      new_cart.forEach((carter) => {
+        if (carter.name === name) {
+          // 교체 작업
+          carter = setPrice(carter, price)
+        }
+      })
+
+      return new_cart
+    }
   }
+
+  const changeValueofCart = setPriceByNameAdvanced(goCart, 'hulk', 70)
+  console.log('changeValueofCart', changeValueofCart)
 }
