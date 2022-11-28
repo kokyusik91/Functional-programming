@@ -72,4 +72,21 @@
 
   const changeValueofCart = setPriceByNameAdvanced(goCart, 'hulk', 70)
   console.log('changeValueofCart', changeValueofCart)
+
+  // 쇼핑카트 배열, 이름, 가격
+  function setPriceByName(carts, name, price) {
+    const new_carts = [...carts]
+    for (let i = 0; i < new_carts.length; i++) {
+      if (new_carts[i].name === name) {
+        new_carts[i] = setPrice(new_carts[i], price)
+      }
+    }
+    return new_carts
+  }
+  // cart 객체와 price를 받아서 가격 변경
+  function setPrice(cart, price) {
+    const new_cart = Object.assign({}, cart)
+    new_cart.price = price
+    return new_cart
+  }
 }
