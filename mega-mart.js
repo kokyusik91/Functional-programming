@@ -47,6 +47,8 @@ function calc_cart_total() {
   set_tax_dom(shopping_cart_total * 0.1)
 }
 
+
+
 /**
  * 함수의 입력과 출력
  */
