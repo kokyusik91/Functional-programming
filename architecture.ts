@@ -15,7 +15,7 @@
     }
     return false
   }
-
+  // 구체적으로 분리
   function remove_item_by_name(cart, name) {
     let idx: any = null
     for (let i = 0; i < cart.length; i++) {
@@ -29,3 +29,7 @@
     return cart
   }
 }
+
+// 직접 구현 패턴 이라는 것은
+// 최상단에 있는 함수가 알 필요가 없는 정보들을 따로 함수를 만들어서 직접 구현 한다는 것을 의미한다.
+// 그렇게 되면 최상단 함수는 인자로 넘기는 값을 직접 적으로 알 필요가 없다는 것이다.
