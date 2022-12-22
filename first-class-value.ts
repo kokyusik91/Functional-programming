@@ -1,4 +1,4 @@
-function multipleByInputValue(x: number, y: number) {
+ㅡㅁfunction multipleByInputValue(x: number, y: number) {
   return x * y
 }
 
